@@ -1,0 +1,9 @@
+[*.py]
+indent_style = space
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+
+# This setting tells Flake8 (which runs pycodestyle) to ignore the E203 error
+# E203: whitespace before ':'
+flake8-ignore = E203
