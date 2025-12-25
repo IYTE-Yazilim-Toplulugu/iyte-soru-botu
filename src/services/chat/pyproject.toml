@@ -4,4 +4,19 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi>=0.127.0",
+    "langchain>=1.2.0",
+    "langgraph>=1.0.5",
+    "openai>=2.14.0",
+    "pandas>=2.3.3",
+    "uvicorn>=0.40.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.uv.sources]
+shared-kernel = { path = "../../libs/shared-kernel", editable = true }
+
+
