@@ -1,0 +1,15 @@
+.claude/
+_bmad/
+.github/agents/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+dooing.json
