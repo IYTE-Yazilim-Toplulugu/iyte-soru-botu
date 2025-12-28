@@ -1,5 +1,5 @@
 def main():
-    print("Hello from iyte soru botu!")
+    print("Hello from shared-kernel!")
 
 
 if __name__ == "__main__":
