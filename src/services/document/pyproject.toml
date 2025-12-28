@@ -1,0 +1,22 @@
+[project]
+name = "document"
+version = "0.1.0"
+description = "Document management service for IYTE Soru Botu"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.128.0",
+    "uvicorn>=0.40.0",
+    "motor>=3.0.0",
+    "minio>=7.2.0",
+    "python-dotenv>=1.2.1",
+    "python-ulid>=3.1.0",
+    "pydantic-settings>=2.0.0",
+    "python-multipart>=0.0.9",
+    "shared-kernel",
+    "grpcio>=1.60.0",
+    "grpcio-tools>=1.60.0",
+]
+
+[tool.uv.sources]
+shared-kernel = { path = "../../libs/shared-kernel", editable = true }
