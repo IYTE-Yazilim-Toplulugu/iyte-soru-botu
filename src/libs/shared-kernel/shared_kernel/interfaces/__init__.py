@@ -6,6 +6,7 @@ from .mediator import (
 )
 from .repository import IRepository
 from .route import Route
+from .server import App
 from .validator import IValidator
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "IRepository",
     "Route",
     "IValidator",
+    "App",
 ]

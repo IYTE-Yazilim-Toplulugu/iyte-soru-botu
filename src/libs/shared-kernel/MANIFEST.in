@@ -1,7 +1,7 @@
 include README.md
 include LICENSE
 include pyproject.toml
-recursive-include shared_kernel_python *.py
+recursive-include shared_kernel *.py
 recursive-exclude * __pycache__
 recursive-exclude * *.pyc
 recursive-exclude * *.pyo

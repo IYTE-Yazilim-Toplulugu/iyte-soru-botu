@@ -1,16 +1,20 @@
-__version__ = "0.4.1"
+__version__ = "1.0.1"
 
 from .entities import (
     AggregateRoot,
     AuditableEntity,
     Entity,
 )
-from .enums import ResponseCode
+from .enums import (
+    ResponseCode,
+    Role,
+)
 from .events import DomainEvent
 from .exceptions import (
     DomainException,
 )
 from .interfaces import (
+    App,
     IMapper,
     IRepository,
     IRequest,
@@ -33,8 +37,10 @@ __all__ = [
     "AggregateRoot",
     "AuditableEntity",
     "ResponseCode",
+    "Role",
     "DomainEvent",
     "DomainException",
+    "App",
     "IMapper",
     "IRepository",
     "IRequest",
