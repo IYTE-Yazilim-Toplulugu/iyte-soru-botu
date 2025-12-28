@@ -117,13 +117,21 @@ git clone https://github.com/IYTE-Yazilim-Toplulugu/iyte-soru-botu.git
 cd iyte-soru-botu
 ```
 
-### 2. Set Up Environment Variables
+### 2. Install Dependencies
 
-Create a `.env` file in the root directory:
+Run the automated setup script to install all dependencies:
 
 ```bash
-cp .env.example .env
+make setup
 ```
+
+This will:
+- Check prerequisites (uv, docker, docker compose)
+- Install shared-kernel dependencies
+- Install all service dependencies (auth, chat, document, gateway)
+- Create `.env` from `.env.example` if it doesn't exist
+
+### 3. Set Up Environment Variables
 
 Edit `.env` with your configuration:
 
@@ -151,17 +159,17 @@ SMTP_USER=your-email@gmail.com
 SMTP_PASSWORD=your-app-password
 ```
 
-### 3. Start All Services with Docker
+### 4. Start All Services with Docker
 
 ```bash
 # Start all services
-docker-compose up -d
+make dev-up
 
 # View logs
-docker-compose logs -f
+make dev-logs
 
 # Check service status
-docker-compose ps
+make dev-status
 ```
 
 This will start:
@@ -177,29 +185,118 @@ This will start:
 - **ChromaDB** on port 8001
 - **MinIO** on ports 9000 (API) and 9001 (Console)
 
-### 4. Access the Application
+### 5. Access the Application
 
 - **API Gateway**: http://localhost:8000
 - **API Docs**: http://localhost:8000/docs
 - **MinIO Console**: http://localhost:9001 (admin/admin)
 - **ChromaDB**: http://localhost:8001
 
-### 5. Verify Installation
+### 6. Verify Installation
 
 ```bash
-# Check gateway health
-curl http://localhost:8000/health
+# Check all services health
+make health
 
-# Check all services
+# Or check individually
+curl http://localhost:8000/health
 curl http://localhost:8000/api/v1/auth/health
 curl http://localhost:8000/api/v1/chat/health
 curl http://localhost:8000/api/v1/documents/health
+```
+
+## 🛠 Development Commands
+
+We use **Makefile** for common development tasks. Run `make help` to see all available commands.
+
+### Setup & Installation
+```bash
+make setup          # Install all dependencies
+make sync           # Sync dependencies across services
+```
+
+### Docker Operations
+```bash
+make dev-up         # Start all services
+make dev-down       # Stop all services
+make dev-restart    # Restart all services
+make dev-rebuild    # Rebuild and restart services
+make dev-logs       # View logs (optional: SERVICE=auth)
+make dev-status     # Show service status
+make dev-clean      # Remove all containers and volumes (DESTRUCTIVE!)
+```
+
+### Service-Specific Commands
+```bash
+make auth           # Start only auth service
+make chat           # Start only chat service
+make document       # Start only document service
+make gateway        # Start only gateway service
+```
+
+### Testing
+```bash
+make test           # Run all tests
+make test-auth      # Run auth service tests
+make test-chat      # Run chat service tests
+make test-document  # Run document service tests
+make test-cov       # Run tests with coverage
+```
+
+### Code Quality
+```bash
+make lint           # Run linting on all services
+make lint-fix       # Auto-fix linting issues
+make format         # Format code with ruff
+make typecheck      # Run mypy type checking
+make check          # Run all quality checks (lint + typecheck)
+make ci             # Run all CI checks locally
+```
+
+### Database Operations
+```bash
+make db-migrate SERVICE=auth    # Run migrations
+make db-reset SERVICE=auth      # Reset database (DESTRUCTIVE!)
+make db-shell SERVICE=auth      # Open database shell
+```
+
+### Monitoring & Debugging
+```bash
+make health         # Check health of all services
+make ping           # Ping all service endpoints
+make logs-auth      # View auth service logs
+make shell-auth     # Open shell in auth container
+```
+
+### Git Workflow
+```bash
+make branch NAME=feature-name   # Create new branch from dev
+make commit MSG="message"       # Quick commit
+make push           # Push current branch
+make pull           # Pull latest from dev
+```
+
+### Quick Aliases
+```bash
+make start          # Alias for dev-up
+make stop           # Alias for dev-down
+make restart        # Alias for dev-restart
+make logs           # Alias for dev-logs
+```
+
+For detailed help, run:
+```bash
+make help
 ```
 
 ## 📁 Project Structure
 
 ```
 iyte-soru-botu/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                  # CI/CD pipeline
+│
 ├── src/
 │   ├── gateway/                    # API Gateway Service
 │   │   ├── src/
@@ -247,6 +344,15 @@ iyte-soru-botu/
 │           │   └── value_objects/  # Value objects
 │           └── pyproject.toml
 │
+├── scripts/                        # Development scripts
+│   ├── setup.sh                    # Initial setup
+│   ├── sync-deps.sh                # Sync dependencies
+│   ├── test-all.sh                 # Run all tests
+│   ├── test-coverage.sh            # Generate coverage
+│   ├── lint-all.sh                 # Lint all services
+│   ├── typecheck-all.sh            # Type check all
+│   └── health-check.sh             # Health monitoring
+│
 ├── deployment/
 │   └── docker/                     # Production Dockerfiles
 │       ├── auth.Dockerfile
@@ -254,6 +360,7 @@ iyte-soru-botu/
 │       ├── document.Dockerfile
 │       └── gateway.Dockerfile
 │
+├── Makefile                        # Development commands
 ├── docker-compose.yml              # Development orchestration
 ├── .env.example                    # Environment template
 └── README.md
@@ -285,44 +392,53 @@ uv sync
 uv run -m src.presentation.main
 ```
 
-#### Option 2: Run All Services with Docker
+#### Option 2: Run All Services with Docker (Recommended)
 
 ```bash
 # Build and start all services
-docker-compose up --build
+make dev-up
 
 # Start specific service
-docker-compose up auth
+make auth
 
 # Rebuild after code changes
-docker-compose up --build chat
+make dev-rebuild
 ```
 
 ### Working on an Issue
 
-1. **Find your assigned issue** on the Project Board
+1. **Find your assigned issue** on the [Project Board](https://github.com/orgs/IYTE-Yazilim-Toplulugu/projects/22)
 
 2. **Create a feature branch**:
    ```bash
-   git checkout -b feature/issue-X-task-name
+   make branch NAME=feature/issue-X-task-name
    ```
 
 3. **Make your changes** following DDD principles
 
-4. **Run linting and type checking**:
+4. **Run code quality checks**:
    ```bash
    # Format code
-   ruff format .
+   make format
 
    # Check linting
-   ruff check .
+   make lint
 
    # Type checking
-   mypy src/
+   make typecheck
+
+   # Or run all checks at once
+   make check
    ```
 
 5. **Test your changes**:
    ```bash
+   # Run tests for specific service
+   make test-auth
+
+   # Or run all tests
+   make test
+
    # Manual testing with curl/Postman
    curl -X POST http://localhost:8000/api/v1/auth/register \
      -H "Content-Type: application/json" \
@@ -345,7 +461,8 @@ docker-compose up --build chat
 
 7. **Push and create Pull Request**:
    ```bash
-   git push origin feature/issue-X-task-name
+   make push
+   # Then create PR on GitHub targeting 'dev' branch
    ```
 
 ### Branch Strategy
@@ -353,6 +470,62 @@ docker-compose up --build chat
 - `main` - Production-ready code
 - `dev` - Development branch (default)
 - `feature/issue-X-*` - Feature branches
+
+## 🔄 CI/CD Pipeline
+
+We use **GitHub Actions** for continuous integration and deployment.
+
+### Automated Checks
+
+On every push or pull request to `dev` or `main` branches, the following checks run automatically:
+
+#### 1. Lint & Type Check
+- Runs `ruff check` on all services (auth, chat, document)
+- Runs `mypy` type checking (non-blocking)
+- Matrix strategy runs checks in parallel for each service
+
+#### 2. Testing
+- Runs pytest on all services with coverage
+- Spins up PostgreSQL, Redis, and MongoDB services
+- Generates coverage reports
+- Uploads to Codecov
+
+#### 3. Docker Build
+- Builds Docker images for all services (gateway, auth, chat, document)
+- Verifies image health
+- Only runs on pushes to `dev` branch
+
+#### 4. Security Scanning
+- Runs Trivy vulnerability scanner
+- Scans for CRITICAL and HIGH severity issues
+- Uploads results to GitHub Security tab
+
+### Running CI Locally
+
+Before pushing, you can run the full CI pipeline locally:
+
+```bash
+# Run all CI checks (lint, typecheck, test)
+make ci
+
+# Or run individually
+make lint
+make typecheck
+make test
+```
+
+### CI Configuration
+
+The pipeline is defined in `.github/workflows/ci.yml`. It uses:
+- **Python 3.12**
+- **uv** for dependency management
+- **Matrix strategy** for parallel execution
+- **Service containers** for databases
+
+### Required Secrets
+
+For the CI pipeline to work, configure these GitHub secrets:
+- `GOOGLE_API_KEY` - Google Gemini API key for chat service tests
 
 ## 📚 API Documentation
 
@@ -460,24 +633,36 @@ For detailed API documentation with interactive testing, visit:
 
 ## 🧪 Testing
 
-### Manual Testing
+### Automated Testing
 
 ```bash
-# Test authentication flow
-./scripts/test-auth.sh
+# Run all tests across all services
+make test
 
-# Test chat flow
-./scripts/test-chat.sh
+# Run tests for specific service
+make test-auth
+make test-chat
+make test-document
 
-# Test document upload
-./scripts/test-documents.sh
+# Run tests with coverage reports
+make test-cov
+
+# Or use scripts directly
+./scripts/test-all.sh
+./scripts/test-coverage.sh
 ```
 
 ### Service Health Checks
 
 ```bash
-# Check all services
-docker-compose ps
+# Check all services health (HTTP + Docker)
+make health
+
+# Check service status
+make dev-status
+
+# Ping all endpoints
+make ping
 
 # Test individual service health
 curl http://localhost:8000/api/v1/auth/health
@@ -488,13 +673,14 @@ curl http://localhost:8000/api/v1/documents/health
 ### Database Connections
 
 ```bash
-# Connect to Auth DB
+# Using Makefile commands
+make db-shell SERVICE=auth
+make db-shell SERVICE=chat
+make db-shell SERVICE=document
+
+# Or using Docker directly
 docker exec -it iyte-auth-db psql -U postgres -d auth_db
-
-# Connect to Chat DB
 docker exec -it iyte-chat-db psql -U postgres -d chat_db
-
-# Connect to MongoDB
 docker exec -it iyte-document-db mongosh -u root -p root
 ```
 
@@ -511,6 +697,33 @@ KEYS session:*
 KEYS rate_limit:*
 ```
 
+### Manual API Testing
+
+```bash
+# Test authentication flow
+curl -X POST http://localhost:8000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@iyte.edu.tr",
+    "password": "SecurePass123!",
+    "first_name": "Test",
+    "last_name": "User"
+  }'
+
+# Test login
+curl -X POST http://localhost:8000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@iyte.edu.tr",
+    "password": "SecurePass123!"
+  }'
+
+# Test with authentication token
+TOKEN="your_token_here"
+curl -X GET http://localhost:8000/api/v1/chat/ \
+  -H "Authorization: Bearer $TOKEN"
+```
+
 ## 🎨 Coding Standards
 
 ### Python Code Style
@@ -524,23 +737,45 @@ KEYS rate_limit:*
 
 ```bash
 # Format code with Ruff
-ruff format .
+make format
 
 # Check linting issues
-ruff check .
+make lint
 
 # Auto-fix linting issues
-ruff check --fix .
+make lint-fix
+
+# Or use ruff directly
+cd src/services/auth
+uv run ruff format .
+uv run ruff check .
+uv run ruff check --fix .
 ```
 
 ### Type Checking
 
 ```bash
-# Run Mypy type checker
-mypy src/
+# Run Mypy type checker on all services
+make typecheck
 
 # Type check specific service
-mypy src/services/auth/
+make typecheck-auth
+make typecheck-chat
+make typecheck-document
+
+# Or use mypy directly
+cd src/services/auth
+uv run mypy .
+```
+
+### Running All Quality Checks
+
+```bash
+# Run linting and type checking
+make check
+
+# Run full CI pipeline locally (lint, typecheck, test)
+make ci
 ```
 
 ### Domain-Driven Design
