@@ -19,13 +19,11 @@ from src.application.queries.get_history import GetHistoryQuery
 
 
 class ChatRouter(RouteInstance):
-
     def __init__(self):
         self.router = APIRouter(tags=["chat"])
         self.setup_routes()
 
     def setup_routes(self):
-
         self.router.add_api_route(
             path="/create",
             endpoint=self._create_chat,

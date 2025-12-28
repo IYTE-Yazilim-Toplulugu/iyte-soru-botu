@@ -16,9 +16,7 @@ from ..models.chat_db_model import ChatDbModel
 
 
 class ChatRepository(IChatRepository):
-
     def __init__(self, session: Session):
-
         self._session = session
 
     def add(self, enlity: Chat) -> Chat:
@@ -28,7 +26,6 @@ class ChatRepository(IChatRepository):
         raise NotImplementedError()
 
     def save(self, chat: Chat) -> Chat:
-
         existing = self._session.get(ChatDbModel, chat.id)
 
         if existing:
@@ -47,7 +44,6 @@ class ChatRepository(IChatRepository):
         return ChatMapper.to_domain(db_model)
 
     def find_by_id(self, chat_id: str) -> Optional[Chat]:
-
         db_model = self._session.get(ChatDbModel, chat_id)
 
         if db_model is None:
@@ -58,7 +54,6 @@ class ChatRepository(IChatRepository):
     def find_by_user_id(
         self, user_id: str, include_archived: bool = False
     ) -> List[Chat]:
-
         statement = select(ChatDbModel).where(ChatDbModel.user_id == user_id)
 
         if not include_archived:
@@ -71,7 +66,6 @@ class ChatRepository(IChatRepository):
         return [ChatMapper.to_domain(db_model) for db_model in results]
 
     def delete(self, chat_id: str) -> bool:
-
         db_model = self._session.get(ChatDbModel, chat_id)
 
         if db_model is None:
@@ -83,6 +77,5 @@ class ChatRepository(IChatRepository):
         return True
 
     def exists(self, chat_id: str) -> bool:
-
         db_model = self._session.get(ChatDbModel, chat_id)
         return db_model is not None

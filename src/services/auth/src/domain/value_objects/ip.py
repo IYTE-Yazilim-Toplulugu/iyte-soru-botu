@@ -12,7 +12,7 @@ class Ip(ValueObject):
 
     def __post_init__(self):
         """Validate IP address format."""
-        octets = self.value.split('.')
+        octets = self.value.split(".")
         if len(octets) != 4 or not all(
             o.isdigit() and 0 <= int(o) <= 255 for o in octets
         ):

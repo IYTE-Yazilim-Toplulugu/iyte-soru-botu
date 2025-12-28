@@ -7,6 +7,7 @@ from shared_kernel import (
     Mediator,
 )
 from shared_kernel import Route as RouteInstance
+
 # from src.application.commands.deactivate_user import DeactivateUserCommand
 # from src.application.commands.update_user import UpdateUserCommand
 from src.application.dependencies import get_mediator
@@ -15,13 +16,11 @@ from src.application.queries.get_user import GetUserQuery
 
 
 class UserRouter(RouteInstance):
-
     def __init__(self):
         self.router = APIRouter(prefix="/user", tags=["user"])
         self.setup_routes()
 
     def setup_routes(self):
-
         self.router.add_api_route(
             path="/{user-id}",
             endpoint=self._get_user,

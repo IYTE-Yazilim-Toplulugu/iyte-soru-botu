@@ -7,9 +7,7 @@ from ..models.chat_db_model import ChatDbModel
 
 
 class ChatMapper(IMapper[ChatDbModel, Chat, ChatDTO]):
-
     def to_domain(self, db_model: ChatDbModel) -> Chat:
-
         return Chat(
             id=db_model.id,
             user_id=db_model.user_id,
@@ -20,7 +18,6 @@ class ChatMapper(IMapper[ChatDbModel, Chat, ChatDTO]):
         )
 
     def to_db(self, domain_entity: Chat) -> ChatDbModel:
-
         return ChatDbModel(
             id=domain_entity.id,
             user_id=domain_entity.user_id,
@@ -31,7 +28,6 @@ class ChatMapper(IMapper[ChatDbModel, Chat, ChatDTO]):
         )
 
     def to_db_update(self, domain_entity: Chat, db_model: ChatDbModel) -> ChatDbModel:
-
         db_model.user_id = domain_entity.user_id
         db_model.title = domain_entity.title
         db_model.message_count = domain_entity.message_count
@@ -41,7 +37,6 @@ class ChatMapper(IMapper[ChatDbModel, Chat, ChatDTO]):
         return db_model
 
     def to_dto(self, domain_entity: Chat) -> ChatDTO:
-
         return ChatDTO(
             id=domain_entity.id,
             user_id=domain_entity.user_id,
@@ -52,7 +47,6 @@ class ChatMapper(IMapper[ChatDbModel, Chat, ChatDTO]):
         )
 
     def from_dto(self, dto: ChatDTO) -> Chat:
-
         return Chat(
             id=dto.id,
             user_id=dto.user_id,

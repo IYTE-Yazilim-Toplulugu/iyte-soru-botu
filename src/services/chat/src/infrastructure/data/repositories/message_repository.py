@@ -17,7 +17,6 @@ from ..models.message_db_model import MessageDbModel
 
 
 class MessageRepository(IMessageRepository):
-
     def __init__(self, session: Session):
         self._session = session
 
@@ -28,7 +27,6 @@ class MessageRepository(IMessageRepository):
         raise NotImplementedError()
 
     def save(self, message: Message) -> Message:
-
         existing = None
         if message.id is not None:
             existing = self._session.get(MessageDbModel, message.id)
@@ -48,7 +46,6 @@ class MessageRepository(IMessageRepository):
         return MessageMapper.to_domain(db_model)
 
     def find_by_id(self, message_id: int) -> Optional[Message]:
-
         db_model = self._session.get(MessageDbModel, message_id)
 
         if db_model is None:
@@ -59,7 +56,6 @@ class MessageRepository(IMessageRepository):
     def find_by_chat_id(
         self, chat_id: str, limit: Optional[int] = None
     ) -> List[Message]:
-
         statement = (
             select(MessageDbModel)
             .where(MessageDbModel.chat_id == chat_id)
@@ -74,7 +70,6 @@ class MessageRepository(IMessageRepository):
         return [MessageMapper.to_domain(db_model) for db_model in results]
 
     def delete(self, message_id: int) -> bool:
-
         db_model = self._session.get(MessageDbModel, message_id)
 
         if db_model is None:
@@ -86,7 +81,6 @@ class MessageRepository(IMessageRepository):
         return True
 
     def count_by_chat_id(self, chat_id: str) -> int:
-
         statement = (
             select(func.count())
             .select_from(MessageDbModel)
@@ -97,6 +91,5 @@ class MessageRepository(IMessageRepository):
         return result
 
     def exists(self, message_id: int) -> bool:
-
         db_model = self._session.get(MessageDbModel, message_id)
         return db_model is not None

@@ -22,7 +22,6 @@ from .command import SendMessageCommand
 
 # Use automapper in future to map entities to dtos
 class SendMessageHandler(IRequestHandler[SendMessageCommand, ApiResponse[MessageDTO]]):
-
     def __init__(
         self,
         repository: IChatRepository,
@@ -31,13 +30,11 @@ class SendMessageHandler(IRequestHandler[SendMessageCommand, ApiResponse[Message
         message_repository: IMessageRepository,
         llm_gateway: Optional[ILlmGateway] = None,
     ):
-
         super().__init__(repository, validator, mapper)
         self._message_repository = message_repository
         self._llm_gateway = llm_gateway
 
     async def handle(self, command: SendMessageCommand) -> MessageDTO:
-
         # 1. Validate command
         if not self._validator.is_valid(command):
             return ApiResponse.bad_request()
@@ -85,7 +82,6 @@ class SendMessageHandler(IRequestHandler[SendMessageCommand, ApiResponse[Message
         chat: Chat,
         message: Message,
     ) -> Message:
-
         # Get conversation history
         history = self._message_repository.find_by_chat_id(chat.id, limit=20)
 

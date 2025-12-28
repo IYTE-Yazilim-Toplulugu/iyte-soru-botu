@@ -7,7 +7,6 @@ from ulid import ULID
 
 @dataclass
 class UserDTO(BaseModel):
-
     id: ULID
     email: str
     name: str

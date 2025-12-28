@@ -12,7 +12,6 @@ from ..enums import (
 
 @dataclass(kw_only=True)
 class Message(Entity[int]):
-
     user_id: ULID
     chat_id: ULID
     sender: MessageSender
@@ -30,8 +29,7 @@ class Message(Entity[int]):
         content: str,
         token: int,
         model: Model,
-    ) -> 'Message':
-
+    ) -> "Message":
         return cls(
             id=ULID(),
             user_id=user_id,

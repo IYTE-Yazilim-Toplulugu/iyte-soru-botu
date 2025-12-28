@@ -8,12 +8,11 @@ from ulid import ULID
 
 @dataclass
 class UserRole(Entity[ULID]):
-
     user_id: ULID = field(default=None)
     role_id: int = field(default=None)
 
     @classmethod
-    def create(cls, user_id: ULID, role_id: int, **kwargs: Any) -> 'UserRole':
+    def create(cls, user_id: ULID, role_id: int, **kwargs: Any) -> "UserRole":
         """Factory method to create a new user role."""
         return cls(
             id=ULID(),

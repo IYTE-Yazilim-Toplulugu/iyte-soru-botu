@@ -50,7 +50,9 @@ def get_mediator(session: Session = Depends(get_session)) -> Mediator:
     forgot_password_handler = ForgotPasswordCommandHandler(user_repository)
     reset_password_handler = ResetPasswordCommandHandler(user_repository)
     verify_email_handler = VerifyEmailCommandHandler(user_repository)
-    refresh_session_handler = RefreshSessionCommandHandler(user_repository, token_service)
+    refresh_session_handler = RefreshSessionCommandHandler(
+        user_repository, token_service
+    )
     get_user_handler = GetUserQueryHandler(user_repository)
 
     # Register handlers to mediator

@@ -12,7 +12,6 @@ from ...dtos import MessageDTO
 
 @dataclass
 class SendMessageCommand(IRequest[ApiResponse[MessageDTO]]):
-
     chat_id: ULID
     user_id: str
     content: str

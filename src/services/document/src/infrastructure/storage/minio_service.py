@@ -73,9 +73,7 @@ class MinIOService(IStorageService):
         except S3Error as e:
             raise StorageException(f"Failed to delete file: {str(e)}")
 
-    async def get_file_url(
-        self, bucket: str, path: str, expires_in: int = 3600
-    ) -> str:
+    async def get_file_url(self, bucket: str, path: str, expires_in: int = 3600) -> str:
         """Get a presigned URL for file access."""
         try:
             from datetime import timedelta

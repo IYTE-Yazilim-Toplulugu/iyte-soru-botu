@@ -10,6 +10,5 @@ from ...dtos import UserDTO
 
 @dataclass
 class LoginCommand(IRequest[ApiResponse[UserDTO]]):
-
     email: str
     password: str

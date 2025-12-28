@@ -18,7 +18,6 @@ from .validator import GetHistoryValidator
 class GetHistoryHandler(
     IRequestHandler[GetHistoryQuery, ApiResponse[List[MessageDTO]]]
 ):
-
     def __init__(
         self,
         chat_repository: IChatRepository,
@@ -30,7 +29,6 @@ class GetHistoryHandler(
         self._message_repository = message_repository
 
     def handle(self, query: GetHistoryQuery) -> ApiResponse[List[MessageDTO]]:
-
         if not GetHistoryValidator.is_valid(query):
             return ApiResponse.bad_request()
 

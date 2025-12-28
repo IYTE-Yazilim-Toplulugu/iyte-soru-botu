@@ -6,9 +6,7 @@ from .command import CreateChatCommand
 
 
 class CreateChatValidator(IValidator[CreateChatCommand]):
-
     def validate(self, command: CreateChatCommand) -> List[str]:
-
         errors = []
 
         if not command.user_id:

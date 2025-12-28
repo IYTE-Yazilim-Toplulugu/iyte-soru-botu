@@ -8,7 +8,6 @@ from sqlmodel import (
 
 
 class ChatDbModel(SQLModel, table=True):
-
     __tablename__ = "chats"
 
     # ULID format for IDs (max length 26 chars for ULID)

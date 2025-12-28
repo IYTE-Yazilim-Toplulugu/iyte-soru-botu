@@ -15,7 +15,6 @@ from .message import Message
 
 @dataclass(kw_only=True)
 class Chat(AggregateRoot[ULID]):
-
     user_id: ULID
     title: Optional[str] = None
     message_count: int = 0
@@ -23,14 +22,12 @@ class Chat(AggregateRoot[ULID]):
 
     @classmethod
     def create(cls, user_id: ULID) -> "Chat":
-
         return cls(
             id=ULID(),
             user_id=user_id,
         )
 
     def send_message(self, message: Message) -> None:
-
         self.message_count += 1
         self.updated_at = datetime.utcnow()
 
@@ -44,7 +41,6 @@ class Chat(AggregateRoot[ULID]):
         self.add_domain_event(event)
 
     def archive(self) -> None:
-
         if not self.is_archived:
             self.is_archived = True
             self.updated_at = datetime.utcnow()
@@ -55,13 +51,11 @@ class Chat(AggregateRoot[ULID]):
         self.add_domain_event(event)
 
     def unarchive(self) -> None:
-
         if self.is_archived:
             self.is_archived = False
             self.updated_at = datetime.utcnow()
 
     def update_title(self, new_title: str) -> None:
-
         self.title = new_title.strip()
         self.updated_at = datetime.utcnow()
 

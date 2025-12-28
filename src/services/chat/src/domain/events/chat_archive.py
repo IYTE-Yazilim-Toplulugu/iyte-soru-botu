@@ -3,5 +3,4 @@ from ulid import ULID
 
 
 class ChatArchiveEvent(DomainEvent):
-
     chat_id: ULID

@@ -12,7 +12,6 @@ from src.domain.enums import (
 
 
 class MessageDbModel(SQLModel, table=True):
-
     __tablename__ = "messages"
 
     id: Optional[int] = Field(default=None, primary_key=True)

@@ -23,7 +23,6 @@ def create_db_and_tables():
 
 @contextmanager
 def get_session() -> Generator[Session, None, None]:
-
     session = Session(engine)
     try:
         yield session
@@ -37,6 +36,5 @@ def get_session() -> Generator[Session, None, None]:
 
 @contextmanager
 def get_db_session() -> Generator[Session, None, None]:
-
     with get_session() as session:
         yield session

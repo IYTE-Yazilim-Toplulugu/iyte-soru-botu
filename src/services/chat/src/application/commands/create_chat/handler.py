@@ -10,9 +10,7 @@ from .command import CreateChatCommand
 
 
 class CreateChatHandler(IRequestHandler[CreateChatCommand, ApiResponse[ChatDTO]]):
-
     async def handle(self, command: CreateChatCommand) -> ApiResponse[ChatDTO]:
-
         validator = self._validator()
         if not validator.is_valid(command):
             return ApiResponse.bad_request()

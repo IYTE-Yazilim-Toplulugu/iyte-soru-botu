@@ -23,7 +23,7 @@ def parse_cors(v: Any) -> list[str] | str:
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = 'chat-service'
+    PROJECT_NAME: str = "chat-service"
 
     BACKEND_CORS_ORIGINS: Annotated[
         list[AnyHttpUrl] | str, BeforeValidator(parse_cors)
@@ -35,31 +35,31 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE: int = 3600
     REFRESH_TOKEN_EXPIRE: int = 3600 * 24 * 30
     JWT_ALGO: str = "RS256"
-    ACCESSTOKENPUBLICKEY: str = ''
-    ACCESSTOKENPRIVATEKEY: str = ''
-    REFRESHTOKENPUBLICKEY: str = ''
-    REFRESHTOKENPRIVATEKEY: str = ''
+    ACCESSTOKENPUBLICKEY: str = ""
+    ACCESSTOKENPRIVATEKEY: str = ""
+    REFRESHTOKENPUBLICKEY: str = ""
+    REFRESHTOKENPRIVATEKEY: str = ""
 
     # SMTP / Emails
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
     SMTP_PORT: int = 587
-    SMTP_HOST: str = 'smtp.gmail.com'
-    SMTP_USER: str = ''
-    SMTP_PASSWORD: str = ''
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
     EMAILS_FROM_EMAIL: Optional[EmailStr] = None
     EMAILS_FROM_NAME: Optional[str] = None
     EMAILS_ENABLED: bool = True
-    EMAILS_DIRECTORY: str = 'app/templates/'
-    FRONTEND_MAIN_ORIGIN: str = 'http://localhost:3000'
+    EMAILS_DIRECTORY: str = "app/templates/"
+    FRONTEND_MAIN_ORIGIN: str = "http://localhost:3000"
 
     # Mongo
     API_V1_STR: str = "/api/v1/chat"
-    MONGO_USER: str = ''
-    MONGO_PASS: str = ''
+    MONGO_USER: str = ""
+    MONGO_PASS: str = ""
     MONGO_HOST: str = "localhost"
     MONGO_PORT: str = "27017"
-    DB_NAME: str = ''
+    DB_NAME: str = ""
 
     @property
     def MONGO_URI(self) -> str:
@@ -74,8 +74,8 @@ settings = Settings()
 
 
 TOKEN_PARAMS = {
-    'ACCESSTOKENPUBLICKEY': settings.ACCESSTOKENPUBLICKEY,
-    'ACCESSTOKENPRIVATEKEY': settings.ACCESSTOKENPRIVATEKEY,
-    'REFRESHTOKENPRIVATEKEY': settings.REFRESHTOKENPRIVATEKEY,
-    'REFRESHTOKENPUBLICKEY': settings.REFRESHTOKENPUBLICKEY,
+    "ACCESSTOKENPUBLICKEY": settings.ACCESSTOKENPUBLICKEY,
+    "ACCESSTOKENPRIVATEKEY": settings.ACCESSTOKENPRIVATEKEY,
+    "REFRESHTOKENPRIVATEKEY": settings.REFRESHTOKENPRIVATEKEY,
+    "REFRESHTOKENPUBLICKEY": settings.REFRESHTOKENPUBLICKEY,
 }

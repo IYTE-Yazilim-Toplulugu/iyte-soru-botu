@@ -5,9 +5,7 @@ from src.domain.interfaces import IUserRepository
 from .command import VerifyEmailCommand
 
 
-class VerifyEmailCommandHandler(
-    IRequestHandler[VerifyEmailCommand, ApiResponse[None]]
-):
+class VerifyEmailCommandHandler(IRequestHandler[VerifyEmailCommand, ApiResponse[None]]):
     """Handler for email verification."""
 
     def __init__(self, user_repository: IUserRepository):

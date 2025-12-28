@@ -31,9 +31,7 @@ class GetDocumentHandler(
     def __init__(self, document_repository: IDocumentRepository):
         self._document_repository = document_repository
 
-    async def handle(
-        self, query: GetDocumentQuery
-    ) -> ApiResponse[Dict[str, Any]]:
+    async def handle(self, query: GetDocumentQuery) -> ApiResponse[Dict[str, Any]]:
         """Handle get document query."""
         try:
             # Get document

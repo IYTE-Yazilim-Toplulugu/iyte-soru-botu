@@ -6,9 +6,7 @@ from .command import LoginCommand
 
 
 class LoginValidator(IValidator[LoginCommand]):
-
     def validate(self, command: LoginCommand) -> List[str]:
-
         errors = []
 
         if not command.email:

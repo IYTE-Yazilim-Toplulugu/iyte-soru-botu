@@ -27,7 +27,6 @@ from .queries.get_history import (
 
 
 def get_mediator(session: Session = Depends(get_session)) -> Mediator:
-
     mediator = Mediator()
 
     # 1. Create Dependencies

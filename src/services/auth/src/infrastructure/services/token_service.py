@@ -28,9 +28,7 @@ class TokenService(ITokenService):
     def create_refresh_token(self, data: Dict[str, Any]) -> str:
         """Create a new refresh token."""
         to_encode = data.copy()
-        expire = datetime.utcnow() + timedelta(
-            days=settings.REFRESH_TOKEN_EXPIRE_DAYS
-        )
+        expire = datetime.utcnow() + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
         to_encode.update({"exp": expire, "type": "refresh"})
 
         encoded_jwt = jwt.encode(

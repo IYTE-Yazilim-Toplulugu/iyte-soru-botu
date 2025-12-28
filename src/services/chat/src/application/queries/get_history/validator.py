@@ -6,9 +6,7 @@ from .query import GetHistoryQuery
 
 
 class GetHistoryValidator(IValidator[GetHistoryQuery]):
-
     def validate(self, query: GetHistoryQuery) -> List[str]:
-
         errors = []
 
         if not query.chat_id:

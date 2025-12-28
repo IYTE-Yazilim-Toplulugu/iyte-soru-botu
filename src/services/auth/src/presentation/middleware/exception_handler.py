@@ -28,11 +28,26 @@ class DomainExceptionMapper(IExceptionMapper):
 
     def __init__(self):
         self._exception_map: Dict[Type[Exception], tuple[str, int]] = {
-            UserAlreadyExistsException: (self._handle_user_exists, status.HTTP_409_CONFLICT),
-            InvalidCredentialsException: (self._handle_invalid_credentials, status.HTTP_401_UNAUTHORIZED),
-            UserNotFoundException: (self._handle_user_not_found, status.HTTP_404_NOT_FOUND),
-            InvalidTokenException: (self._handle_invalid_token, status.HTTP_400_BAD_REQUEST),
-            UserInactiveException: (self._handle_user_inactive, status.HTTP_403_FORBIDDEN),
+            UserAlreadyExistsException: (
+                self._handle_user_exists,
+                status.HTTP_409_CONFLICT,
+            ),
+            InvalidCredentialsException: (
+                self._handle_invalid_credentials,
+                status.HTTP_401_UNAUTHORIZED,
+            ),
+            UserNotFoundException: (
+                self._handle_user_not_found,
+                status.HTTP_404_NOT_FOUND,
+            ),
+            InvalidTokenException: (
+                self._handle_invalid_token,
+                status.HTTP_400_BAD_REQUEST,
+            ),
+            UserInactiveException: (
+                self._handle_user_inactive,
+                status.HTTP_403_FORBIDDEN,
+            ),
         }
 
     def map(self, exc: Exception) -> tuple[ApiResponse[None], int]:
@@ -51,7 +66,9 @@ class DomainExceptionMapper(IExceptionMapper):
         return ApiResponse[None].exists(str(exc))
 
     @staticmethod
-    def _handle_invalid_credentials(exc: InvalidCredentialsException) -> ApiResponse[None]:
+    def _handle_invalid_credentials(
+        exc: InvalidCredentialsException,
+    ) -> ApiResponse[None]:
         return ApiResponse[None].unauthenticated(str(exc))
 
     @staticmethod
@@ -94,7 +111,9 @@ class GlobalExceptionHandler:
         self._validation_mapper = ValidationExceptionMapper()
         self._generic_mapper = GenericExceptionMapper()
 
-    async def handle_domain_exception(self, request: Request, exc: DomainException) -> JSONResponse:
+    async def handle_domain_exception(
+        self, request: Request, exc: DomainException
+    ) -> JSONResponse:
         """Handle domain exceptions."""
         response, status_code = self._domain_mapper.map(exc)
         return JSONResponse(
@@ -102,7 +121,9 @@ class GlobalExceptionHandler:
             content=response.model_dump(),
         )
 
-    async def handle_validation_exception(self, request: Request, exc: ValueError) -> JSONResponse:
+    async def handle_validation_exception(
+        self, request: Request, exc: ValueError
+    ) -> JSONResponse:
         """Handle validation exceptions."""
         response, status_code = self._validation_mapper.map(exc)
         return JSONResponse(
@@ -110,7 +131,9 @@ class GlobalExceptionHandler:
             content=response.model_dump(),
         )
 
-    async def handle_generic_exception(self, request: Request, exc: Exception) -> JSONResponse:
+    async def handle_generic_exception(
+        self, request: Request, exc: Exception
+    ) -> JSONResponse:
         """Handle generic exceptions."""
         response, status_code = self._generic_mapper.map(exc)
         return JSONResponse(

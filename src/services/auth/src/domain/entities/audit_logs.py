@@ -14,7 +14,6 @@ from ..value_objects import Ip
 
 @dataclass
 class AuditLogs(Entity[ULID]):
-
     user_id: ULID = field(default=None)
     action: Action = field(default=None)
     ip_address: Ip = field(default=None)
@@ -29,8 +28,7 @@ class AuditLogs(Entity[ULID]):
         ip_address: Ip,
         user_agent: UserAgent,
         metadata: Dict,
-    ) -> 'AuditLogs':
-
+    ) -> "AuditLogs":
         return cls(
             id=ULID(),
             user_id=user_id,

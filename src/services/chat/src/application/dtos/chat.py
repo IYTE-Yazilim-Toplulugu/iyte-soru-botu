@@ -8,7 +8,6 @@ from ulid import ULID
 
 @dataclass
 class ChatDTO(BaseModel):
-
     id: ULID
     user_id: ULID
     title: str

@@ -9,9 +9,7 @@ from .command import AddTitleCommand
 
 
 class AddTitleHandler(IRequestHandler[AddTitleCommand, ApiResponse[None]]):
-
     async def handle(self, command: AddTitleCommand) -> ApiResponse[None]:
-
         validator = self._validator()
         if not validator.is_valid(command):
             return ApiResponse.bad_request()

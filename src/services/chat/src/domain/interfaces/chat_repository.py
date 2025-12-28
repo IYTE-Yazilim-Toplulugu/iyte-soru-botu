@@ -8,7 +8,6 @@ from ..entities.chat import Chat
 
 
 class IChatRepository(IRepository[ULID, Chat]):
-
     @abstractmethod
     def find_by_user_id(
         self, user_id: str, include_archived: bool = False

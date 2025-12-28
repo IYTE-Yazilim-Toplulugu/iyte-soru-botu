@@ -6,9 +6,7 @@ from .command import AddTitleCommand
 
 
 class AddTitleValidator(IValidator[AddTitleCommand]):
-
     def validate(self, command: AddTitleCommand) -> List[str]:
-
         errors = []
 
         if not command.chat_id:

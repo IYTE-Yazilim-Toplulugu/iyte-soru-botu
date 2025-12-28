@@ -18,13 +18,11 @@ from src.domain.models import TokenResult
 
 
 class AuthRouter(RouteInstance):
-
     def __init__(self):
         self.router = APIRouter(prefix="/auth", tags=["auth"])
         self.setup_routes()
 
     def setup_routes(self):
-
         self.router.add_api_route(
             path="/register",
             endpoint=self._register_user,

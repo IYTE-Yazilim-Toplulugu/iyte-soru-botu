@@ -14,7 +14,6 @@ from src.domain.entities import Message
 
 @dataclass
 class GetHistoryQuery(IRequest[ApiResponse[List[Message]]]):
-
     chat_id: str
     user_id: str
     limit: Optional[int] = None

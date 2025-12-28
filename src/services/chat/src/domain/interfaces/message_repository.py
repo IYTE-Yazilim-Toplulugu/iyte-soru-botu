@@ -10,7 +10,6 @@ from src.domain.entities import Message
 
 
 class IMessageRepository(IRepository[int, Message]):
-
     @abstractmethod
     def find_by_chat_id(
         self, chat_id: str, limit: Optional[int] = None

@@ -22,9 +22,7 @@ class DeleteDocumentCommand(IRequest[ApiResponse[None]]):
     user_id: str
 
 
-class DeleteDocumentHandler(
-    IRequestHandler[DeleteDocumentCommand, ApiResponse[None]]
-):
+class DeleteDocumentHandler(IRequestHandler[DeleteDocumentCommand, ApiResponse[None]]):
     """Handler for document deletion."""
 
     def __init__(

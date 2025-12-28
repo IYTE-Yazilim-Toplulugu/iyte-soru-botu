@@ -12,6 +12,5 @@ from ...dtos import ChatDTO
 
 @dataclass
 class CreateChatCommand(IRequest[ApiResponse[ChatDTO]]):
-
     user_id: ULID
     message: Optional[str] = None
